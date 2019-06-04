@@ -1,0 +1,1550 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix carml: <http://carml.taxonic.com/carml/> .
+@prefix model: <http://localhost/socialNetwork/model#>. 
+@prefix dc: <http://purl.org/dc/elements/1.1/>.  
+@prefix ns: <http://www.w3.org/2003/06/sw-vocab-status/ns#>. 
+@prefix owl: <http://www.w3.org/2002/07/owl#>.  
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.    
+@prefix wot: <http://xmlns.com/wot/0.1/>.
+@prefix xml: <http://www.w3.org/XML/1998/namespace>.  
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.  
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.  
+@prefix skos:<http://www.w3.org/2004/02/skos/core#>.
+@prefix terms: <http://purl.org/dc/terms/>.
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix marl: <http://purl.org/marl/ns#>.
+
+<#PublicationMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}" ;
+    rr:class  model:Publication
+  ] ;
+rr:predicateObjectMap [
+   rr:predicate model:sharedFrom;
+    rr:objectMap [
+      rr:parentTriplesMap <#OriginalPublicationMapping>;
+    ] ;
+  ];
+  rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#ContentMapping>;
+    ] ;
+  ];
+ rr:predicateObjectMap [
+   rr:predicate model:generatedBy;
+    rr:objectMap [
+      rr:parentTriplesMap <#SingleAuthorMapping>;
+    ] ;
+  ].
+
+
+ <#OriginalPublicationMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Publication/{retweetedStatus.id}" ;
+  rr:class model:Publication ;
+  ] ;
+ 
+ rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#OriginalContentMapping>;
+    ] ;
+  ];
+
+  rr:predicateObjectMap [
+   rr:predicate model:publishedBy;
+    rr:objectMap [
+      rr:parentTriplesMap <#FirstAuthorMapping>;
+      rr:joinCondition [
+        rr:child "user";
+        rr:parent "$.retweetedStatus";
+      ];
+    ] ;
+  ].
+<#OriginalContentMapping> a rr:TriplesMap ;
+   rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+              
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Content/{retweetedStatus.id}" ;
+     rr:class model:Content ;
+  ] ;
+   rr:predicateObjectMap [
+    rr:predicate model:hasDevice  ;
+    rr:objectMap [
+         rr:parentTriplesMap <#OriginalDateMapping>;
+    ] ;
+  ] ;
+  
+ rr:predicateObjectMap [
+    rr:predicate model:hasFeedBack  ;
+    rr:objectMap [
+       rr:parentTriplesMap <#OriginalFeedBackMapping>;
+    ] ;
+  ] ;
+ 
+rr:predicateObjectMap [
+    rr:predicate model:hasType  ;
+    rr:objectMap [
+       rr:parentTriplesMap <#OriginalTextMapping>;
+    ] ;
+  ];
+  
+  rr:predicateObjectMap [
+    rr:predicate model:sourcedFrom  ;
+    rr:objectMap [
+        rr:parentTriplesMap <#SourceMapping>;
+    ] ;
+  ] ;
+  
+   rr:predicateObjectMap [
+    rr:predicate model:hasDevice  ;
+    rr:objectMap [
+        rml:reference "$.retweetedStatus.source";
+    ] ;
+  ] ;
+     rr:predicateObjectMap [
+    rr:predicate model:hasLocation  ;
+    rr:objectMap [
+        rml:reference "$.retweetedStatus.geoLocation";
+    ] ;
+  ] .
+  
+   <#OriginalDateMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+  rr:subjectMap [
+    rr:template "http://www.w3.org/2006/time/{id}/GeneralDateTimeDescription" ;
+  rr:class time:GeneralDateTimeDescription ;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate time:year ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:YearMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:month ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MonthMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:day ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:DayMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:hour ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:HourMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:nonNegativeInteger ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:minute ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MinuteMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];];
+    rr:predicateObjectMap [
+    rr:predicate time:second ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:SecondMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];].
+  <#OriginalFeedBackMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.id}/FeedBack" ;
+ rr:class model:FeedBack;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+   rr:parentTriplesMap <#OriginalPopularityMetricsMapping>;
+    ] ;
+  ]; 
+  rr:predicateObjectMap [
+    rr:predicate model:likesCount;
+    rr:objectMap [
+    rml:reference "$.retweetedStatus.favoriteCount";
+     rr:datatype xsd:nonNegativeInteger ;
+    ] ;
+  ]; 
+  rr:predicateObjectMap [
+    rr:predicate model:sharesCount;
+    rr:objectMap [
+     rml:reference "$.retweetedStatus.retweetCount";
+      rr:datatype xsd:nonNegativeInteger ;
+    ] ;
+  ].
+  <#OriginalTextMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.id}/Text" ;
+      rr:class model:Text ;
+
+  ] ;
+ rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:template "http://localhost/socialNetwork/model/{retweetedStatus.id}/Type";
+     rr:class model:Type;
+    ] ];
+    rr:predicateObjectMap [
+    rr:predicate model:hasProperties;
+    rr:objectMap [
+        rr:parentTriplesMap <#OriginalTextPropertiesMapping>;
+    ] ;
+  ] ;
+ rr:predicateObjectMap [
+    rr:predicate model:hasTextFeatures;
+    rr:objectMap [
+         rr:parentTriplesMap <#TextFeaturesMapping>;
+    ] ].
+  
+  <#OriginalTextPropertiesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.id}/TextProperties" ;
+      rr:class model:TextProperties ;
+
+  ] ;
+  rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+  rr:parentTriplesMap <#OriginalPropertiesMapping>;
+    ] ;
+  ] ;
+  
+
+rr:predicateObjectMap [
+    rr:predicate model:hasLanguage ;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.lang";
+    ]] .
+    <#OriginalPropertiesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.id}/Properties" ;
+ rr:class  model:Properties
+  ] ;
+  rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#OriginalContextualFeaturesMapping>;
+     ] ;
+  ] .
+     <#OriginalContextualFeaturesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.id}/ContextualFeatures" ;
+rr:class  model:ContextualFeatures;
+  ] ;
+
+ rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+       rr:parentTriplesMap <#OriginalPopularityMetricsMapping>;
+    ] ].
+    
+     <#OriginalPopularityMetricsMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.id}/PopularityMetrics" ;
+    rr:class  model:PopularityMetrics;
+  ] .
+    
+<#ContentMapping> a rr:TriplesMap ;
+   rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+              
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Content/{id}" ;
+     rr:class model:Content ;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate model:hasFeedBack  ;
+    rr:objectMap [
+       rr:parentTriplesMap <#FeedBackMapping>;
+    ] ;
+  ] ;
+   rr:predicateObjectMap [
+    rr:predicate model:createdAt  ;
+    rr:objectMap [
+       rr:parentTriplesMap <#DateMapping>;
+    ] ;
+  ] ;
+ 
+  rr:predicateObjectMap [
+    rr:predicate model:sourcedFrom  ;
+    rr:objectMap [
+        rr:parentTriplesMap <#SourceMapping>;
+    ] ;
+  ] ;
+  
+rr:predicateObjectMap [
+    rr:predicate model:hasType  ;
+    rr:objectMap [
+       rr:parentTriplesMap <#TextMapping>;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+    rr:predicate model:hasDevice  ;
+    rr:objectMap [
+        rml:reference "$.source";
+    ] ;
+  ]  .
+  
+  <#DateMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+  rr:subjectMap [
+    rr:template "http://www.w3.org/2006/time/{id}/GeneralDateTimeDescription" ;
+  rr:class time:GeneralDateTimeDescription;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate time:year ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:YearMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:month ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MonthMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:day ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:DayMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:hour ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:HourMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:nonNegativeInteger ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:minute ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MinuteMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];];
+    rr:predicateObjectMap [
+    rr:predicate time:second ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:SecondMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];].
+  
+<#FeedBackMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/FeedBack" ;
+      rr:class model:FeedBack;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+   rr:parentTriplesMap <#PopularityMetricsMapping>;
+    ] ;
+  ]; 
+  rr:predicateObjectMap [
+    rr:predicate model:likesCount;
+    rr:objectMap [
+    rml:reference "$.favoriteCount";
+    rr:datatype xsd:nonNegativeInteger ;
+    ] ;
+  ]; 
+  rr:predicateObjectMap [
+    rr:predicate model:sharesCount;
+    rr:objectMap [
+     rml:reference "$.retweetCount";
+     rr:datatype xsd:nonNegativeInteger ;
+    ] ;
+  ].
+  
+      <#SourceMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Source" ;
+    rr:class model:Source ;
+  ] ;
+
+ rr:predicateObjectMap [
+    rr:predicate model:hasCategory;
+    rr:objectMap [
+      rr:constant "MicroBlog" ;
+        rr:datatype xsd:string ;
+    ] ];
+ rr:predicateObjectMap [
+    rr:predicate model:hasLink;
+    rr:objectMap [
+        rr:constant "http://twitter.com" ;
+         rr:datatype xsd:string ;
+    ] ];
+    rr:predicateObjectMap [
+    rr:predicate model:hasName;
+    rr:objectMap [
+        rr:constant "Twitter" ;
+         rr:datatype xsd:string ;
+    ] ;
+  ] .
+  
+  
+<#TextMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/Text" ;
+      rr:class model:Text ;
+
+  ] ;
+ rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:template "http://localhost/socialNetwork/model/{id}/Type";
+      rr:class model:Type
+    ] ];
+    rr:predicateObjectMap [
+    rr:predicate model:hasOpinion;
+    rr:objectMap [
+        rr:parentTriplesMap <#OpinionMapping>;
+    ] ;
+  ] ;
+    rr:predicateObjectMap [
+    rr:predicate model:hasProperties;
+    rr:objectMap [
+        rr:parentTriplesMap <#TextPropertiesMapping>;
+    ] ;
+  ] ;
+ rr:predicateObjectMap [
+    rr:predicate model:hasTextFeatures;
+    rr:objectMap [
+         rr:parentTriplesMap <#TextFeaturesMapping>;
+    ] ].
+    
+     <#OpinionMapping> a rr:TriplesMap ;
+    rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://purl.org/marl/ns/{id}/Opinion" ;
+    rr:class marl:Opinion ;
+
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate marl:hasPolarity;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:OpinionMappingFunction ;
+          ]
+        ] ,
+    
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.text" ]
+        ] 
+    ] ; 
+rr:datatype xsd:String ;
+    
+  ];].
+    
+
+<#TextPropertiesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/TextProperties" ;
+      rr:class model:TextProperties ;
+
+  ] ;
+  rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+  rr:parentTriplesMap <#PropertiesMapping>;
+    ] ;
+  ] ;
+
+
+rr:predicateObjectMap [
+    rr:predicate model:hasLanguage ;
+    rr:objectMap [
+      rml:reference "$.lang";
+    ]] .
+    
+    <#PropertiesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/Properties" ;
+ rr:class  model:Properties
+  ] ;
+  rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#ContextualFeaturesMapping>;
+     ] ;
+  ] .
+    
+    <#ContextualFeaturesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/ContextualFeatures" ;
+rr:class  model:ContextualFeatures;
+  ] ;
+
+ rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+       rr:parentTriplesMap <#PopularityMetricsMapping>;
+    ] ].
+    
+       <#PopularityMetricsMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/PopularityMetrics" ;
+    rr:class  model:PopularityMetrics;
+  ] .
+    
+    <#TextFeaturesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/TextFeatures" ;
+  rr:class  model:TextFeatures;
+  ] ;
+ rr:predicateObjectMap [
+    rr:predicate model:hasValue ;
+    rr:objectMap [
+      rml:reference "$.text";
+    ]] ;
+    
+     rr:predicateObjectMap [
+    rr:predicate model:mentionedPerson;
+    rr:objectMap [
+      rml:reference "$.text";
+    ]] ;
+    
+ rr:predicateObjectMap [
+    rr:predicate model:hasHashTag ;
+    rr:objectMap [
+      rml:reference "$.text";
+    ]] ;
+    
+    rr:predicateObjectMap [
+    rr:predicate model:hasTopic ;
+    rr:objectMap [
+      rml:reference "$.text";
+    ]] ;
+    
+    rr:predicateObjectMap [
+    rr:predicate model:hasURL ;
+    rr:objectMap [
+      rml:reference "$.text";
+    ]] ;
+     rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#ContentFeaturesMapping>;
+    ] ].
+    
+     <#ContentFeaturesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{id}/ContentFeatures" ;
+rr:class model:ContentFeatures;
+  ] ;
+
+ rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+       rr:template "http://localhost/socialNetwork/model/{id}/PopularityMetrics" ;
+    rr:class  model:PopularityMetrics;
+    ]] .  
+    
+
+    <#SingleAuthorMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/SingleAuthor/{user.id}" ;
+    rr:class foaf:Person
+
+  ] ;
+   rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#AuthorMapping>;
+    ] ;
+  ];
+
+  rr:predicateObjectMap [
+   rr:predicate model:hasStatus;
+    rr:objectMap [
+      rml:reference "$.user.status";
+       rr:datatype xsd:string ;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+   rr:predicate model:hasConnectivityMetrics;
+    rr:objectMap [
+   rr:parentTriplesMap <#ConnectivityMetricsMapping>;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+   rr:predicate model:hasActivityMetrics;
+    rr:objectMap [
+   rr:parentTriplesMap <#ActivityMetricsMapping>;
+    ] ;
+  ].
+  
+  
+ <#AuthorMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Author/{user.id}" ;
+ rr:class model:Author
+  ] ;
+ 
+
+  rr:predicateObjectMap [
+   rr:predicate model:hasScreenName;
+    rr:objectMap [
+      rml:reference "$.user.name";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+   rr:predicate model:hasDescription;
+    rr:objectMap [
+      rml:reference "$.user.description";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+rr:predicateObjectMap [
+   rr:predicate model:hasLocation;
+    rr:objectMap [
+      rml:reference "$.user.location";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+  rr:predicateObjectMap [
+   rr:predicate model:hasEmail;
+    rr:objectMap [
+      rml:reference "$.user.email";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+  rr:predicateObjectMap [
+   rr:predicate model:createdAt;
+    rr:objectMap [
+     rr:parentTriplesMap  <#AuthorCreationDateMapping>;
+    ] ;
+  ]; 
+  rr:predicateObjectMap [
+   rr:predicate model:hasLanguage;
+    rr:objectMap [
+      rml:reference "$.user.lang";
+         rr:datatype xsd:string ;
+    ] ;
+  ].
+  
+ <#AuthorCreationDateMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+  rr:subjectMap [
+    rr:template "http://www.w3.org/2006/time/{user.id}/GeneralDateTimeDescription" ;
+  rr:class time:GeneralDateTimeDescription;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate time:year ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:YearMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:month ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MonthMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:day ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:DayMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:hour ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:HourMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:nonNegativeInteger ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:minute ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MinuteMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];];
+    rr:predicateObjectMap [
+    rr:predicate time:second ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:SecondMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];].
+  
+
+  
+ <#ConnectivityMetricsMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{user.id}/ConnectivityMetrics" ;
+ rr:class model:ConnectivityMetrics
+  ] ;
+   rr:predicateObjectMap [
+   rr:predicate model:friendsCount;
+    rr:objectMap [
+     rml:reference "$.user.friendsCount";
+      rr:datatype xsd:nonNegativeInteger;
+    ] ;
+  ];
+  rr:predicateObjectMap [
+   rr:predicate model:followersCount;
+    rr:objectMap [
+      rml:reference "$.user.followersCount";
+       rr:datatype xsd:nonNegativeInteger;
+    ] ;
+  ] .
+   <#ActivityMetricsMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{user.id}/ActivityMetrics" ;
+ rr:class model:ActivityMetrics
+  ] ;
+   rr:predicateObjectMap [
+   rr:predicate model:publicationCount;
+    rr:objectMap [
+     rml:reference "$.user.statusesCount";
+      rr:datatype xsd:nonNegativeInteger;
+    ] ;
+ ];
+  rr:predicateObjectMap [
+   rr:predicate model:subscriptionsCount;
+    rr:objectMap [
+     rml:reference "$.user.listedCount";
+      rr:datatype xsd:nonNegativeInteger;
+    ] ;
+ ];
+  rr:predicateObjectMap [
+   rr:predicate model:likesCount;
+    rr:objectMap [
+     rml:reference "$.user.favourites_count";
+      rr:datatype xsd:nonNegativeInteger;
+    ] ;
+ ].
+ 
+     
+   <#FirstAuthorMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$";
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/SingleAuthor/{retweetedStatus.user.id}" ;
+    rr:class foaf:Person
+
+  ] ;
+   rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#OriginalAuthorMapping>;
+    ] ;
+  ];
+
+  rr:predicateObjectMap [
+   rr:predicate model:hasStatus;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.status";
+       rr:datatype xsd:string ;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+   rr:predicate model:hasConnectivityMetrics;
+    rr:objectMap [
+   rr:parentTriplesMap <#OriginalConnectivityMetricsMapping>;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+   rr:predicate model:hasActivityMetrics;
+    rr:objectMap [
+   rr:parentTriplesMap <#OriginalActivityMetricsMapping>;
+    ] ;
+  ].
+  
+   <#OriginalAuthorMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Author/{retweetedStatus.user.id}" ;
+rr:class model:Author
+  ] ;
+ 
+rr:predicateObjectMap [
+   rr:predicate foaf:OnlineAccount;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.screenName";
+         rr:datatype xsd:string ;
+    ] ;
+  ]; 
+  rr:predicateObjectMap [
+   rr:predicate model:hasScreenName;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.name";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+   rr:predicate model:hasDescription;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.description";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+rr:predicateObjectMap [
+   rr:predicate model:hasLocation;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.location";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+  rr:predicateObjectMap [
+   rr:predicate model:hasEmail;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.email";
+         rr:datatype xsd:string ;
+    ] ;
+  ];
+   rr:predicateObjectMap [
+   rr:predicate model:createdAt;
+    rr:objectMap [
+      rr:parentTriplesMap <#OriginalAuthorCreationDateMapping>;
+    ] ;
+  ];
+  rr:predicateObjectMap [
+   rr:predicate model:hasLanguage;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.lang";
+         rr:datatype xsd:string ;
+    ] ;
+  ].
+  
+  <#OriginalAuthorCreationDateMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+  rr:subjectMap [
+    rr:template "http://www.w3.org/2006/time/{user.id}/GeneralDateTimeDescription" ;
+  rr:class time:GeneralDateTimeDescription;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate time:year ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:YearMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:month ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MonthMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:day ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:DayMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:hour ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:HourMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:nonNegativeInteger ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:minute ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MinuteMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];];
+    rr:predicateObjectMap [
+    rr:predicate time:second ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:SecondMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.retweetedStatus.user.createdAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];].
+  
+  <#OriginalConnectivityMetricsMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.user.id}/ConnectivityMetrics" ;
+rr:class model:ConnectivityMetrics;
+  ] ;
+   rr:predicateObjectMap [
+   rr:predicate model:friendsCount;
+    rr:objectMap [
+     rml:reference "$.retweetedStatus.user.friendsCount";
+       rr:datatype xsd:nonNegativeInteger;
+    ] ;
+  ];
+  rr:predicateObjectMap [
+   rr:predicate model:followersCount;
+    rr:objectMap [
+      rml:reference "$.retweetedStatus.user.followersCount";
+        rr:datatype xsd:nonNegativeInteger;
+    ] ;
+  ] .
+
+   <#OriginalActivityMetricsMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{retweetedStatus.user.id}/ActivityMetrics" ;
+rr:class model:ActivityMetrics;
+  ] ;
+   rr:predicateObjectMap [
+   rr:predicate model:publicationCount;
+    rr:objectMap [
+     rml:reference "$.retweetedStatus.user.statusesCount";
+    ] ;
+ ];
+  rr:predicateObjectMap [
+   rr:predicate model:subscriptionsCount;
+    rr:objectMap [
+     rml:reference "$.retweetedStatus.user.listedCount";
+       rr:datatype xsd:nonNegativeInteger;
+    ] ;
+ ];
+  rr:predicateObjectMap [
+   rr:predicate model:likesCount;
+    rr:objectMap [
+     rml:reference "$.retweetedStatus.user.favourites_count";
+       rr:datatype xsd:nonNegativeInteger;
+    ] ;
+ ].
+ 
+  

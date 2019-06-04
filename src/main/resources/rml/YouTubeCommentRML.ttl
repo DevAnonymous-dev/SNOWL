@@ -1,0 +1,413 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix carml: <http://carml.taxonic.com/carml/> .
+@prefix model: <http://localhost/socialNetwork/model#>. 
+@prefix dc: <http://purl.org/dc/elements/1.1/>.  
+@prefix ns: <http://www.w3.org/2003/06/sw-vocab-status/ns#>. 
+@prefix owl: <http://www.w3.org/2002/07/owl#>.  
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.    
+@prefix wot: <http://xmlns.com/wot/0.1/>.
+@prefix xml: <http://www.w3.org/XML/1998/namespace>.  
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.  
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.  
+@prefix skos:<http://www.w3.org/2004/02/skos/core#>.
+@prefix terms: <http://purl.org/dc/terms/>.
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix fno: <http://semweb.datasciencelab.be/ns/function#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix marl: <http://purl.org/marl/ns#>.
+<#PublicationMapping> a rr:TriplesMap ;
+ rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+  rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{snippet.topLevelComment.id}" ;
+    rr:class  model:Reply
+  
+  ] ;
+ 
+rr:predicateObjectMap [
+   rr:predicate model:replyedBy;
+    rr:objectMap [
+      rr:template "http://localhost/socialNetwork/model/SingleAuthor/{snippet.topLevelComment.snippet.authorChannelId.value}";
+      rr:class foaf:Organization;
+    ]; ];
+rr:predicateObjectMap [
+   rr:predicate model:aReplyTo;
+    rr:objectMap [
+      rr:template "http://localhost/socialNetwork/model/{snippet.topLevelComment.snippet.videoId}";
+      rr:class model:Content;
+    ]; ];
+      
+  rr:predicateObjectMap [
+   rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#ContentMapping>;
+    ] ; ].
+  
+ <#ContentMapping> a rr:TriplesMap ;
+   rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+              
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Content/{snippet.topLevelComment.id}" ;
+rr:class model:Content;
+  ] ;
+  
+   rr:predicateObjectMap [
+    rr:predicate model:publishedAt;
+    rr:objectMap [
+        rr:parentTriplesMap <#DateMapping>;
+    ] ;
+  ] ;
+ 
+  rr:predicateObjectMap [
+    rr:predicate model:sourcedFrom  ;
+    rr:objectMap [
+        rr:parentTriplesMap <#SourceMapping>;
+    ] ;
+  ] ;
+  
+rr:predicateObjectMap [
+    rr:predicate model:hasType  ;
+    rr:objectMap [
+       rr:parentTriplesMap <#TextMapping>;
+    ] ;
+  ].
+   <#DateMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+  rr:subjectMap [
+    rr:template "http://www.w3.org/2006/time#GeneralDateTimeDescription" ;
+  rr:class time:GeneralDateTimeDescription;
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate time:year ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:YearMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.snippet.topLevelComment.snippet.publishedAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:month ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MonthMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.snippet.topLevelComment.snippet.publishedAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:day ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:DayMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.snippet.topLevelComment.snippet.publishedAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:integer ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:hour ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:HourMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.snippet.topLevelComment.snippet.publishedAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:nonNegativeInteger ;
+  ];];
+  rr:predicateObjectMap [
+    rr:predicate time:minute ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:MinuteMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.snippet.topLevelComment.snippet.publishedAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];];
+    rr:predicateObjectMap [
+    rr:predicate time:second ;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:SecondMappingFunction ;
+          ]
+        ] ,
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.snippet.topLevelComment.snippet.publishedAt" ]
+        ] 
+    ] ;
+    rr:datatype xsd:decimal ;
+  ];].
+ 
+  <#SourceMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model#Source" ;
+    rr:class model:Source ;
+  ] ;
+
+ rr:predicateObjectMap [
+    rr:predicate model:hasCategory;
+    rr:objectMap [
+      rr:constant "MediaSharing" ;
+        rr:datatype xsd:string ;
+    ] ];
+ rr:predicateObjectMap [
+    rr:predicate model:hasLink;
+    rr:objectMap [
+        rr:constant "http://youtube.com" ;
+         rr:datatype xsd:string ;
+    ] ];
+    rr:predicateObjectMap [
+    rr:predicate model:hasName;
+    rr:objectMap [
+        rr:constant "YouTube" ;
+         rr:datatype xsd:string ;
+    ] ;
+  ] .
+  
+ <#TextMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/Type/{snippet.topLevelComment.id}/Text" ;
+      rr:class model:Text ;
+
+  ] ;
+ rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:template "http://localhost/socialNetwork/model/{snippet.topLevelComment.id}/Type";
+      rr:class model:Type
+    ] ];
+    rr:predicateObjectMap [
+    rr:predicate model:hasOpinion;
+    rr:objectMap [
+        rr:parentTriplesMap <#OpinionMapping>;
+    ] ;
+  ] ;
+   
+ rr:predicateObjectMap [
+    rr:predicate model:hasTextFeatures;
+    rr:objectMap [
+         rr:parentTriplesMap <#TextFeaturesMapping>;
+    ] ].
+	
+	  <#OpinionMapping> a rr:TriplesMap ;
+    rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://purl.org/marl/ns/{snippet.topLevelComment.id}/Opinion" ;
+    rr:class marl:Opinion ;
+
+  ] ;
+  rr:predicateObjectMap [
+    rr:predicate marl:hasPolarity;
+    rr:objectMap [
+    a fnml:FunctionMap ;
+    fnml:functionValue [
+      rml:logicalSource model:LogicalSource ;
+      rr:subjectMap [
+        rr:template "functionExec";
+        rr:termType rr:BlankNode ;
+        rr:class fno:Execution
+      ] ;
+      rr:predicateObjectMap
+        [
+          rr:predicate fno:executes ;
+          rr:objectMap [
+            rr:constant model:OpinionMappingFunction ;
+          ]
+        ] ,
+    
+        [
+          rr:predicate model:intParameterA ;
+          rr:objectMap [ rml:reference "$.snippet.topLevelComment.snippet.textDisplay" ]
+        ] 
+    ] ;
+    rr:datatype xsd:String ;
+  ];].
+    
+    <#TextFeaturesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{snippet.topLevelComment.id}/TextFeatures" ;
+  rr:class  model:TextFeatures;
+  ] ;
+ rr:predicateObjectMap [
+    rr:predicate model:hasValue ;
+    rr:objectMap [
+      rml:reference "$.snippet.topLevelComment.snippet.textDisplay";
+    ]] ;
+    
+     rr:predicateObjectMap [
+    rr:predicate model:mentionedPerson;
+    rr:objectMap [
+      rml:reference "$.snippet.topLevelComment.snippet.textDisplay";
+    ]] ;
+    
+ rr:predicateObjectMap [
+    rr:predicate model:hasHashTag ;
+    rr:objectMap [
+      rml:reference "$.snippet.topLevelComment.snippet.textDisplay";
+    ]] ;
+    
+    rr:predicateObjectMap [
+    rr:predicate model:hasTopic ;
+    rr:objectMap [
+      rml:reference "$.snippet.topLevelComment.snippet.textDisplay";
+    ]] ;
+    
+    rr:predicateObjectMap [
+    rr:predicate model:hasURL ;
+    rr:objectMap [
+      rml:reference "$.snippet.topLevelComment.snippet.textDisplay";
+    ]] ;
+     rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rr:parentTriplesMap <#ContentFeaturesMapping>;
+    ] ].
+    
+     <#ContentFeaturesMapping> a rr:TriplesMap ;
+  rml:logicalSource [
+	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/videoComment.json";
+    rml:referenceFormulation ql:JSONPath;
+      rml:iterator "$"
+    ];
+
+ rr:subjectMap [
+    rr:template "http://localhost/socialNetwork/model/{snippet.topLevelComment.id}/ContentFeatures" ;
+rr:class model:ContentFeatures;
+  ] ;
+
+ rr:predicateObjectMap [
+    rr:predicate rdfs:subClassOf;
+    rr:objectMap [
+      rml:reference "http://localhost/socialNetwork/model#PopularityMetrics";
+    ]] .  
+    
+
+  
