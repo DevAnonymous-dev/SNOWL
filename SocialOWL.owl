@@ -1,0 +1,1626 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://localhost/socialNetwork/model#"
+     xml:base="http://localhost/socialNetwork/model"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:ns="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:wot="http://xmlns.com/wot/0.1/"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://localhost/socialNetwork/model">
+        <owl:imports rdf:resource="http://purl.org/marl/ns"/>
+        <owl:imports rdf:resource="http://www.w3.org/2006/time#2016"/>
+        <owl:imports rdf:resource="http://xmlns.com/foaf/0.1/"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://localhost/socialNetwork/model#aReplyTo -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#aReplyTo">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#hasReply"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Reply"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Content"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#actionOn -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#actionOn">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#hasAction"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Activity"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Content"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#contains -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#contains">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#sourcedFrom"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Source"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#createdAt -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#createdAt">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#endsOn -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#endsOn">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#followedBy -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#followedBy">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#follows"/>
+        <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#follows -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#follows">
+        <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#friendOf -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#friendOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasAction -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasAction">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Activity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasActionMetrics -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasActionMetrics">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#ActivityMetrics"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasBirthDay -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasBirthDay">
+        <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2006/time#MonthOfYear"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasCategory -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasCategory">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#VideoProperties"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Category"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasConnectivity -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasConnectivity">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#ConnectivityMetrics"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasContentFeatures -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasContentFeatures">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Type"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#ContentFeatures"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasDate -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasDate">
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Date"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasDuration -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasDuration">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#VideoProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2006/time#DurationDescription"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasFeedBack -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasFeedBack">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#FeedBack"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasGender -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasGender">
+        <rdfs:domain rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Gender"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasMember -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasMember">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#isMemberOf"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Group"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Organization"/>
+                    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasParticipant -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasParticipant">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#participateOn"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Event"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Organization"/>
+                    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasProfileImage -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasProfileImage">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasProperties -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasProperties">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Type"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Properties"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasReaction -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasReaction">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#reactionTo"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Reaction"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasReactionFrom -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasReactionFrom">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#reactTo"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasReaction"/>
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#reactedBy"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasReply -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasReply">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Reply"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasStatus -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasStatus">
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Status"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasSubscription -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasSubscription">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#subscribeOn"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasType -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#hasType">
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Type"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#isMemberOf -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#isMemberOf">
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Group"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#made -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#made">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#madeBy"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Activity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#madeBy -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#madeBy">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Activity"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Author"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#participateOn -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#participateOn">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Organization"/>
+                    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#publish -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#publish">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#publishedBy"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Publication"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#publishedBy -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#publishedBy">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Publication"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Author"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#reactBy -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#reactBy">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#reactedBy"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Reaction"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the reaction made by a user to react to content</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#reactTo -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#reactTo">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#reactBy"/>
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasReaction"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#reactedBy -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#reactedBy">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Reaction"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Author"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#reactionTo -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#reactionTo">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Reaction"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Content"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#relatedTo -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#relatedTo">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Publication"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Publication"/>
+    </owl:ObjectProperty>
+    
+  <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#repliedFrom">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#replyTo"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasReply"/>
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#replyedBy"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#reply -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#reply">
+        <owl:inverseOf rdf:resource="http://localhost/socialNetwork/model#replyedBy"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Reply"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#replyTo -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#replyTo">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#reply"/>
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#aReplyTo"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#replyedBy -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#replyedBy">
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Author"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#sourcedFrom -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#sourcedFrom">
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Source"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#startsOn -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#startsOn">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2006/time#DateTimeDescription"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#subscribeOn -->
+
+    <owl:ObjectProperty rdf:about="http://localhost/socialNetwork/model#subscribeOn"/>
+    
+
+
+    <!-- http://purl.org/marl/ns#extractedFrom -->
+
+    <rdf:Description rdf:about="http://purl.org/marl/ns#extractedFrom">
+        <rdfs:range rdf:resource="http://localhost/socialNetwork/model#Text"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://purl.org/marl/ns#hasOpinion -->
+
+    <rdf:Description rdf:about="http://purl.org/marl/ns#hasOpinion">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Text"/>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://localhost/socialNetwork/model#about -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#about">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the author metadata</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#activityMetrics -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#activityMetrics"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#connectivityProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#connectivityProperty">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#ConnectivityMetrics"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the metrics related to the author is connectivity</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#feedbackProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#feedbackProperty">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#FeedBack"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the number of feedBack generated by users to react on a publication</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#followersCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#followersCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#connectivityProperty"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#ConnectivityMetrics"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#friendsCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#friendsCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#connectivityProperty"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#ConnectivityMetrics"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasAge -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasAge">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasColor -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasColor">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#ImageFeatures"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasDescription">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasFormat -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasFormat">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#mediaProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasHashTag -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasHashTag">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#textEmbededEntity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasHeight -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasHeight">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#mediaProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasId -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasId">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasInterest -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasInterest">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasJob -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasJob">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasLanguage -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasLanguage">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#textProperties"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#TextProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasLastName -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasLastName">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasLength -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasLength">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#textProperties"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#TextProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasLink -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasLink">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasLocation -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasLocation">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasRates -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasRates">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#feedbackProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasScreenName -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasScreenName">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasSize -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasSize">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#mediaProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasTags -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasTags">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#mediaProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasTitle">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#videoProperties"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#VideoProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasTopic -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasTopic">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#textEmbededEntity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#hasWidth -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#hasWidth">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#mediaProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#likesCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#likesCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#feedbackProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#mediaProperties -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#mediaProperties">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#MediaProperties"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#membersCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#membersCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#connectivityProperty"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#ConnectivityMetrics"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#publicationsCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#publicationsCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#activityMetrics"/>
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#ActivityMetrics"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#replyCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#replyCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#feedbackProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#sharesCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#sharesCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#feedbackProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#subscriptionsCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#subscriptionsCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#connectivityProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#textEmbededEntity -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#textEmbededEntity">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#TextFeatures"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#textProperties -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#textProperties">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#TextProperties"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#url -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#url">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#textEmbededEntity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#videoProperties -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#videoProperties">
+        <rdfs:domain rdf:resource="http://localhost/socialNetwork/model#VideoProperties"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#viewsCount -->
+
+    <owl:DatatypeProperty rdf:about="http://localhost/socialNetwork/model#viewsCount">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#feedbackProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/accountName -->
+
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/accountName">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/familyName -->
+
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/familyName">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/family_name -->
+
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/family_name">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/firstName -->
+
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/firstName">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/lastName -->
+
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/lastName">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/surname -->
+
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/surname">
+        <rdfs:subPropertyOf rdf:resource="http://localhost/socialNetwork/model#about"/>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Activity -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Activity">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Publish"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Reply"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Share"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasDate"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Date"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">actions made by online social media users</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#ActivityMetrics -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#ActivityMetrics">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#AuthorPopularityMetrics"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Author -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Author">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#sourcedFrom"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Source"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasDescription"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasId"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasLink"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasId"/>
+        </owl:hasKey>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasLink"/>
+        </owl:hasKey>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">the online social media users who publish the content in different social media websites</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">User</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#AuthorPopularityMetrics -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#AuthorPopularityMetrics">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#ContextualFeatures"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Category -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Category">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Animation"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Documentary"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Education"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Movie"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Music"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Sport"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#ConnectivityMetrics -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#ConnectivityMetrics">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#AuthorPopularityMetrics"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Content -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Content">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasFeedBack"/>
+                <owl:allValuesFrom rdf:resource="http://localhost/socialNetwork/model#FeedBack"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasType"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Type"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasDate"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Date"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#sourcedFrom"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Source"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasId"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasLink"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasId"/>
+        </owl:hasKey>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasLink"/>
+        </owl:hasKey>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reperesent the content generated by online social media users such as comments and publications</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#ContentFeatures -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#ContentFeatures">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#PopularityMetrics"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#ContextualFeatures -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#ContextualFeatures">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#PopularityMetrics"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Date -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Date">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the date of the creation of an online profile or the date of the generation of a content</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Event -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Event"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#FeedBack -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#FeedBack">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#ContextualFeatures"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Gender -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Gender">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Female"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Mal"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Group -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Group">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Author"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#participateOn"/>
+                <owl:allValuesFrom rdf:resource="http://localhost/socialNetwork/model#Event"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a set of online social media users share the same interest</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Image -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Image">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Media"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Image</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Image</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#ImageFeatures -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#ImageFeatures">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#ContentFeatures"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#ImageProperties -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#ImageProperties">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#MediaProperties"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Media -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Media">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Type"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the user generated media such as Image and video</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#MediaProperties -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#MediaProperties">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Properties"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#MediaSharing -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#MediaSharing">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#YouTube"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Source"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the set of online social media used to publish media data such as YouTube, Instagram, etc.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#MicroBlogging -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#MicroBlogging">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Twitter"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Source"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the set of microblug online social media  such as Twitter</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#PopularityMetrics -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#PopularityMetrics">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">defines the set of metrics used to analyse and predict the popularity of online genertade content such as videos and photos</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Properties -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Properties">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#ContextualFeatures"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Publication -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Publication">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#publishedBy"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Author"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the content generated by users such as posts, tweets and youtube videos.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Reaction -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Reaction">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Dislike"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Favorite"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Like"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Rate"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasDate"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Date"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Reply -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Reply">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Content"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#replyedBy"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Author"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Single -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Single">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Author"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#SocialNetwork -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#SocialNetwork">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Facebook"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Source"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the set of online social media used in social purpose such as Facebook, MySpace, etc.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Source -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Source">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasLink"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:hasKey rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://localhost/socialNetwork/model#hasLink"/>
+        </owl:hasKey>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Describes the online social media website from which sourced the content or the author profile</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Online Social Media</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Status -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Status">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:oneOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Married"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Single"/>
+                    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Widow"/>
+                </owl:oneOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Text -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Text">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Type"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasContentFeatures"/>
+                <owl:allValuesFrom rdf:resource="http://localhost/socialNetwork/model#TextFeatures"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasProperties"/>
+                <owl:allValuesFrom rdf:resource="http://localhost/socialNetwork/model#TextProperties"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">text can designes a full text publication or textula publication linked to media data</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Text</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#TextFeatures -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#TextFeatures">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#ContentFeatures"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the content of a textual description</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#TextProperties -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#TextProperties">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Properties"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Type -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Type">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the types of content that can be generated by online social media users such as videos, text and Image</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Video -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#Video">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Media"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">video</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Video</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#VideoFeatures -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#VideoFeatures">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#ContentFeatures"/>
+    </owl:Class>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#VideoProperties -->
+
+    <owl:Class rdf:about="http://localhost/socialNetwork/model#VideoProperties">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#MediaProperties"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasDescription"/>
+                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Organization -->
+
+    <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Organization">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Single"/>
+    </rdf:Description>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/Person -->
+
+    <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Person">
+        <rdfs:subClassOf rdf:resource="http://localhost/socialNetwork/model#Single"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasGender"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Gender"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://localhost/socialNetwork/model#hasStatus"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://localhost/socialNetwork/model#Status"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Animation -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Animation"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Dislike -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Dislike"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Documentary -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Documentary"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Education -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Education"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Facebook -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Facebook"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Favorite -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Favorite"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Female -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Female"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Like -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Like"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Mal -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Mal"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Married -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Married"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Movie -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Movie"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Music -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Music"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#News -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#News"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Publish -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Publish"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Rate -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Rate"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Reply -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Reply"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Share -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Share"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Single -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Single"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Sport -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Sport"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Twitter -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Twitter"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#Widow -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#Widow"/>
+    
+
+
+    <!-- http://localhost/socialNetwork/model#YouTube -->
+
+    <owl:NamedIndividual rdf:about="http://localhost/socialNetwork/model#YouTube"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://localhost/socialNetwork/model#Reply">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">describes the comments generated by users to reply to publication such as comments on youtube videos</rdfs:comment>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
+
+
+    <!-- http://localhost/socialNetwork/model#repliedFrom -->
