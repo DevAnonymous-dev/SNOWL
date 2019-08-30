@@ -21,7 +21,7 @@
 
 <#PublicationMapping> a rr:TriplesMap ;
  rml:logicalSource [
-	rml:source "/home/franz/eclipse_projects/SNOWLApplication/src/main/resources/data/tweet.json";
+	rml:source "/home/username/tweet.json";
     rml:referenceFormulation ql:JSONPath;
       rml:iterator "$"
     ];
