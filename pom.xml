@@ -12,7 +12,7 @@
     <tests.include>test.TestSuites$Prepush</tests.include>
     <tests.exclude />
     <!-- All RDF4J deps use the same version. -->
-    <rdf4j.version>2.2.2</rdf4j.version>
+    <rdf4j.version>3.0.1</rdf4j.version>
     <!-- Same thing applies to Jena. -->
     <jena.version>3.3.0</jena.version>
   </properties>
